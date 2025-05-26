@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      padding: 40px 30px;
+      max-width: 800px;
+      width: 90%;
+      margin: 40px 0;
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #000;
+      text-align: center;
+    }
+
+    .filter-summary,
+    .recommended-schemes {
+      background: #e8f5e9;
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 20px;
+      font-size: 18px;
+      color: #000;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+    }
+
+    .filter-summary p,
+    .recommended-schemes p {
+      margin: 10px 0;
+    }
+
+    .filter-summary span {
+      color: #555;
+    }
+
+    .scheme-link {
+      display: block;
+      margin: 8px 0;
+      color: #1b5e20;
+      text-decoration: none;
+    }
+
+    .scheme-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Filtered Results</h2>
+
+    <div class="filter-summary">
+      <p><strong>Gender:</strong> <span id="gender"></span></p>
+      <p><strong>Marital Status:</strong> <span id="maritalStatus"></span></p>
+      <p><strong>Disability:</strong> <span id="disability"></span></p>
+      <p><strong>Annual Income:</strong> <span id="income"></span></p>
+      <p><strong>Age:</strong> <span id="age"></span></p>
+      <p><strong>State:</strong> <span id="state"></span></p>
+      <p><strong>Area:</strong> <span id="area"></span></p>
+      <p><strong>Caste:</strong> <span id="caste"></span></p>
+      <p><strong>Education:</strong> <span id="education"></span></p>
+      <p><strong>Occupation:</strong> <span id="occupation"></span></p>
+    </div>
+
+    <div class="recommended-schemes">
+      <h3>Recommended Schemes</h3>
+      <div id="recommended-links"></div>
+    </div>
+    
+  </div>
+
+  <script>
+    document.getElementById("gender").textContent = localStorage.getItem("gender") || "-";
+    document.getElementById("maritalStatus").textContent = localStorage.getItem("maritalStatus") || "-";
+    document.getElementById("disability").textContent = localStorage.getItem("disability") || "-";
+    document.getElementById("income").textContent = localStorage.getItem("income") || "-";
+    document.getElementById("age").textContent = localStorage.getItem("age") || "-";
+    document.getElementById("state").textContent = localStorage.getItem("state") || "-";
+    document.getElementById("area").textContent = localStorage.getItem("area") || "-";
+    document.getElementById("caste").textContent = localStorage.getItem("caste") || "-";
+    document.getElementById("education").textContent = localStorage.getItem("education") || "-";
+    document.getElementById("occupation").textContent = localStorage.getItem("occupation") || "-";
+
+
+    const occupation = localStorage.getItem("occupation") || "-";
+document.getElementById("occupation").textContent = occupation;
+
+const education = localStorage.getItem("education") || "-";
+document.getElementById("education").textContent = education;
+
+const age = parseInt(localStorage.getItem("age")) || "-"; // parseInt for numeric comparison
+document.getElementById("age").textContent = age;
+
+const disability = localStorage.getItem("disability") || "-";
+document.getElementById("disability").textContent = disability;
+
+const gender = localStorage.getItem("gender") || "-";
+document.getElementById("gender").textContent = gender;
+
+const linksContainer = document.getElementById("recommended-links");
+
+
+if (disability.toLowerCase() === "yes"){
+  if (education.toLowerCase() === "undergraduate" || education.toLowerCase() === "diploma"){
+    linksContainer.innerHTML = `
+    <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/sak-dip" target="_blank">AICTE Saksham1</a>
+    <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/sak-deg" target="_blank"> AICTE Saksham2</a>
+    <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/fanf-pwd" target="_blank"> Financial</a>
+    `;
+  }else{
+    linksContainer.innerHTML = `
+    <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/fanf-pwd" target="_blank"> AICTE Saksham</a>
+    `;
+  }
+} else{
+    if (occupation.toLowerCase() === "farmer") {
+      linksContainer.innerHTML = `
+        <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/e-nam" target="_blank">National Agriculture Market</a>
+        <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/aif" target="_blank">Agriculture Infrastructure Fund</a>
+        <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/aems" target="_blank">Agriculture Engineering Scheme</a>
+        <a class="scheme-link" href="https://agristartup.gov.in/" target="_blank">AGRI STARTUP</a>
+        <a class="scheme-link" href="https://www.itcportal.com/businesses/agri-business/e-choupal.aspx" target="_blank">ITC e-CHOUPAL</a>
+      `;
+    } else if (education.toLowerCase() === "undergraduate" || education.toLowerCase() === "postgraduate") {
+      linksContainer.innerHTML = `
+        <a class="scheme-link" href="https://www.scholarships.reliancefoundation.org/" target="_blank">RELIANCE SCHOLARSHIP</a>
+        <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/fesmwpnie" target="_blank">Free Education for Medal Winners</a>
+        <a class="scheme-link" href="https://instep.infosysapps.com/" target="_blank">INFOSYS INSTEP</a>
+      `;
+    } else if (occupation.toLowerCase() === "laborer") {
+      if (age !== "-" && age >= 18) {
+        linksContainer.innerHTML = `
+          <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/abvky" target="_blank">Atal Bheem Vyakti Kalyan Yojana</a>
+          <a class="scheme-link" href="https://www.ncs.gov.in" target="_blank">PM Rojgar Prothsah Yojan</a>
+          <a class="scheme-link" href="https://labour.gov.in/aatmanirbhar-bharat-rojgar-yojana-abry" target="_blank">Aatmanirbhar Bharat Rojgar</a>
+          <a class="scheme-link" href="https://labour.gov.in/pradhan-mantri-rojgar-protsaham-yojanapmrpy" target="_blank">National Career Service</a>
+        `;
+      } else {
+        linksContainer.innerHTML = `<p>INVALID AGE TO WORK</p>`;
+      }
+    } else if (occupation.toLowerCase() === "self employed"){
+      linksContainer.innerHTML = `
+        <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/fapsfti" target="_blank">Self Employee</a>
+        <a class="scheme-link" href="https://msme.gov.in" target="_blank">PMEGP</a>
+        <a class="scheme-link" href="https://amritmahotsav.nic.in" target="_blank">Atmanirbhar Bharat</a>
+      `;
+    } else if (occupation.toLowerCase() === "private sector"){
+      linksContainer.innerHTML = `
+        <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/fapsfti" target="_blank">Private</a>
+        <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/isshsfdc" target="_blank">Industrial Sector</a>
+      `;
+    } else if (occupation.toLowerCase() === "government employee"){
+      if (gender === "female"){
+        linksContainer.innerHTML = `
+          <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/gidapge" target="_blank">Govenment Insurance</a>
+          <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/gwwh" target="_blank">Govenment women hostel</a>
+          <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/ipmwcd" target="_blank">Internship</a>
+          <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/rmfgp" target="_blank">Reimbursement</a>
+        `;
+      }
+      else{
+        linksContainer.innerHTML = `
+          <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/rmfgp" target="_blank">Reimbursement</a>
+          <a class="scheme-link" href="https://www.myscheme.gov.in/schemes/gidapge" target="_blank">Govenment Insurance</a>
+        `;
+      }
+    } else if (occupation.toLowerCase() === "unemployed"){
+      linksContainer.innerHTML = `
+        <a class="scheme-link" href="https://pmsvanidhi.mohua.gov.in" target="_blank">PM Sevanidhi</a>
+        <a class="scheme-link" href="https://nrega.nic.in" target="_blank"> MGNREGA Act</a>
+        <a class="scheme-link" href="https://rudsetitraining.org" target="_blank"> RUDSETIS</a>
+        <a class="scheme-link" href="https://youth4jobs.org" target="_blank">Youth4Jobs</a>
+      `;
+    } else  {
+      linksContainer.innerHTML = `<p>No schemes are found</p>`;
+    }
+}
+
+
+  </script>
+</body>
+</html>
