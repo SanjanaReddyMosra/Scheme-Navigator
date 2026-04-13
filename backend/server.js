@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config({ path: __dirname + '/.env' }); // Make sure we use the right .env path
+const cron = require("node-cron");
+const fetchSchemes = require("./fetchSchemes");
 
 const app = express();
 app.use(cors());
@@ -42,7 +44,27 @@ app.post("/login", async (req, res) => {
       res.json({success: false, message: "Invalid login credentials"});
     }
   } catch (err) {
+  } catch (err) {
     res.status(500).json({ success: false, message: "Login failed" });
+  }
+});
+
+// DYNAMIC FILTERS (Auto-generated from database)
+app.get("/filters", async (req, res) => {
+  try {
+    const genders = await Scheme.distinct("gender");
+    const castes = await Scheme.distinct("caste");
+    const education = await Scheme.distinct("education");
+    
+    // Ensure "any" or default options are included, even dynamically
+    res.json({
+      genders: [...new Set(["any", "Male", "Female", ...genders])],
+      castes: [...new Set(["any", "General", "OBC", "SC/ST", ...castes])],
+      education: [...new Set(["any", "10th", "12th", "Graduate", "Student", ...education])]
+    });
+  } catch (err) {
+    console.error("Filter extraction error:", err);
+    res.status(500).json({ message: "Failed to load dynamic filters" });
   }
 });
 
@@ -105,6 +127,12 @@ app.post("/getSchemes", async (req, res) => {
     console.error("Fetch schemes error:", err);
     res.status(500).json({ message: "Failed to get schemes" });
   }
+});
+
+// Run Auto-fetch job every day at midnight
+cron.schedule("0 0 * * *", () => {
+  console.log("Triggering scheduled scheme fetch job...");
+  fetchSchemes();
 });
 
 const PORT = process.env.PORT || 5000;

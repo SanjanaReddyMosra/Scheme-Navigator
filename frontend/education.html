@@ -12,17 +12,29 @@
     <h2>Step 5: Education</h2>
     <p>What is your highest level of education?</p>
     
-    <div class="options-grid">
-      <div class="option-btn" onclick="next('None')">No formal education</div>
-      <div class="option-btn" onclick="next('10th')">10th Pass</div>
-      <div class="option-btn" onclick="next('12th')">12th Pass</div>
-      <div class="option-btn" onclick="next('Graduate')">Graduate and Above</div>
+    <div class="options-grid" id="options-container">
+      <div style="text-align: center; grid-column: 1 / -1;">Loading dynamic filters...</div>
     </div>
     
     <button class="btn secondary mt-20" onclick="window.history.back()">Back</button>
   </div>
 
   <script>
+    async function loadFilters(){
+      try {
+        const res = await fetch("http://localhost:5000/filters");
+        const data = await res.json();
+        let options = "";
+        data.education.forEach(e => {
+          options += `<div class="option-btn" onclick="next('${e}')" style="text-transform: capitalize;">${e}</div>`;
+        });
+        document.getElementById("options-container").innerHTML = options;
+      } catch (e) {
+        document.getElementById("options-container").innerHTML = "<p>Error loading filters</p>";
+      }
+    }
+    loadFilters();
+
     function next(val){
       localStorage.setItem("education", val);
       

@@ -12,16 +12,29 @@
     <h2>Step 1: Identity</h2>
     <p>What is your gender?</p>
     
-    <div class="options-grid">
-      <div class="option-btn" onclick="next('Male')">♂️ Male</div>
-      <div class="option-btn" onclick="next('Female')">♀️ Female</div>
-      <div class="option-btn" onclick="next('Other')" style="grid-column: 1 / -1;">⚧ Other / Prefer not to say</div>
+    <div class="options-grid" id="options-container">
+      <div style="text-align: center; grid-column: 1 / -1;">Loading dynamic filters...</div>
     </div>
     
     <button class="btn secondary mt-20" onclick="window.history.back()">Back</button>
   </div>
 
   <script>
+    async function loadFilters(){
+      try {
+        const res = await fetch("http://localhost:5000/filters");
+        const data = await res.json();
+        let options = "";
+        data.genders.forEach(g => {
+          options += `<div class="option-btn" onclick="next('${g}')" style="text-transform: capitalize;">${g}</div>`;
+        });
+        document.getElementById("options-container").innerHTML = options;
+      } catch (e) {
+        document.getElementById("options-container").innerHTML = "<p>Error loading filters</p>";
+      }
+    }
+    loadFilters();
+
     function next(val){
       localStorage.setItem("gender", val);
       // add a small delay for animation wow factor

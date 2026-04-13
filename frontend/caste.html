@@ -12,17 +12,29 @@
     <h2>Step 4: Category</h2>
     <p>Select your category/caste</p>
     
-    <div class="options-grid">
-      <div class="option-btn" onclick="next('General')">General</div>
-      <div class="option-btn" onclick="next('OBC')">OBC</div>
-      <div class="option-btn" onclick="next('SC/ST')">SC / ST</div>
-      <div class="option-btn" onclick="next('any')">Prefer not to say</div>
+    <div class="options-grid" id="options-container">
+      <div style="text-align: center; grid-column: 1 / -1;">Loading dynamic filters...</div>
     </div>
     
     <button class="btn secondary mt-20" onclick="window.history.back()">Back</button>
   </div>
 
   <script>
+    async function loadFilters(){
+      try {
+        const res = await fetch("http://localhost:5000/filters");
+        const data = await res.json();
+        let options = "";
+        data.castes.forEach(c => {
+          options += `<div class="option-btn" onclick="next('${c}')" style="text-transform: capitalize;">${c}</div>`;
+        });
+        document.getElementById("options-container").innerHTML = options;
+      } catch (e) {
+        document.getElementById("options-container").innerHTML = "<p>Error loading filters</p>";
+      }
+    }
+    loadFilters();
+
     function next(val){
       localStorage.setItem("caste", val);
       
