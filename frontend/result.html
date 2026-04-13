@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="glass-panel glass-panel-large">
-    <h1>Your Recommended Schemes</h1>
+    <h1>👉 Recommended Schemes for You</h1>
     <p>Based on your profile, our AI scoring system has ranked these schemes to maximize your benefits.</p>
     
     <div id="loading" class="spinner"></div>
@@ -51,11 +51,11 @@
             output += `
               <div class="scheme-card">
                 <span class="score-badge">🏆 Match Score: ${s.score} | ${scorePercent}% Match</span>
-                <h3>${s.scheme_name}</h3>
-                <p class="benefits">${s.benefits}</p>
+                <h3>📜 ${s.scheme_name}</h3>
+                <p class="benefits">✨ ${s.benefits}</p>
                 <div style="display:flex; justify-content: space-between; align-items:center; margin-top:10px;">
-                  <span style="font-size:0.8rem; color:#94a3b8;">Eligible Age: ${s.min_age}-${s.max_age}</span>
-                  <a href="${s.link}" target="_blank" class="apply-btn">Apply Now</a>
+                  <span style="font-size:0.8rem; color:#94a3b8;">📅 Eligible Age: ${s.min_age}-${s.max_age}</span>
+                  <a href="${s.link}" target="_blank" class="apply-btn">🚀 Apply Now</a>
                 </div>
               </div>
             `;

@@ -112,6 +112,117 @@ const sampleSchemes = [
     link: "https://maandhan.in/",
     min_age: 18,
     max_age: 40
+  },
+  // Added extra schemes to meet the >=15 schemes requirement
+  {
+    scheme_name: "Atal Pension Yojana (APY)",
+    gender: "any",
+    income_below: 9999999,
+    caste: "any",
+    education: "any",
+    benefits: "Guaranteed minimum pension of ₹1000-₹5000 per month at age 60",
+    link: "https://npscra.nsdl.co.in/scheme-details.php",
+    min_age: 18,
+    max_age: 40
+  },
+  {
+    scheme_name: "PM Jan Dhan Yojana (PMJDY)",
+    gender: "any",
+    income_below: 9999999,
+    caste: "any",
+    education: "any",
+    benefits: "Zero balance bank accounts, RuPay debit card with an inbuilt ₹1 lakh accident insurance",
+    link: "https://pmjdy.gov.in/",
+    min_age: 10,
+    max_age: 100
+  },
+  {
+    scheme_name: "PM Suraksha Bima Yojana (PMSBY)",
+    gender: "any",
+    income_below: 9999999,
+    caste: "any",
+    education: "any",
+    benefits: "Accidental Death & Disability Cover of ₹2 Lakhs per year",
+    link: "https://www.jansuraksha.gov.in/Files/PMSBY/English/Rules.pdf",
+    min_age: 18,
+    max_age: 70
+  },
+  {
+    scheme_name: "PM Jeevan Jyoti Bima Yojana (PMJJBY)",
+    gender: "any",
+    income_below: 9999999,
+    caste: "any",
+    education: "any",
+    benefits: "Life Insurance Cover of ₹2 Lakhs at ₹436/year premium",
+    link: "https://www.jansuraksha.gov.in/Files/PMJJBY/English/Rules.pdf",
+    min_age: 18,
+    max_age: 50
+  },
+  {
+    scheme_name: "PM Ujjwala Yojana",
+    gender: "Female",
+    income_below: 150000, 
+    caste: "any", // Mainly rural / BPL
+    education: "any",
+    benefits: "Deposit-free LPG connection and subsidies for adult women of BPL families",
+    link: "https://www.pmuy.gov.in/",
+    min_age: 18,
+    max_age: 100
+  },
+  {
+    scheme_name: "National Social Assistance Programme (NSAP)",
+    gender: "any",
+    income_below: 100000, // BPL indicator
+    caste: "any",
+    education: "any",
+    benefits: "Financial assistance/pensions to the elderly, widows, and persons with disabilities",
+    link: "https://nsap.nic.in/",
+    min_age: 60,
+    max_age: 100
+  },
+  {
+    scheme_name: "PM Kaushal Vikas Yojana (PMKVY)",
+    gender: "any",
+    income_below: 9999999,
+    caste: "any",
+    education: "10th",
+    benefits: "Free, industry-relevant skill training to help youth secure a better livelihood",
+    link: "https://www.pmkvyofficial.org/",
+    min_age: 15,
+    max_age: 45
+  },
+  {
+    scheme_name: "Deen Dayal Upadhyaya Grameen Kaushalya Yojana",
+    gender: "any",
+    income_below: 150000, // Rural poor youth focus
+    caste: "any",
+    education: "12th",
+    benefits: "Funding for rural youth training and employment placement",
+    link: "http://ddugky.gov.in/",
+    min_age: 15,
+    max_age: 35
+  },
+  {
+    scheme_name: "Beti Bachao Beti Padhao",
+    gender: "Female",
+    income_below: 9999999,
+    caste: "any",
+    education: "any",
+    benefits: "Ensures survival, protection, and education of the girl child (awareness and incentive components)",
+    link: "https://wcd.nic.in/bbbp-schemes",
+    min_age: 0,
+    max_age: 18
+  },
+  {
+    scheme_name: "Stand Up India - SC/ST and Women Entrepreneurs",
+    gender: "any",
+    income_below: 9999999,
+    caste: "SC/ST", 
+    education: "any",
+    benefits: "Loans up to 1 Crore to promote entrepreneurship among targeted demographic",
+    link: "https://www.standupmitra.in/",
+    min_age: 18,
+    max_age: 65
   }
 ];
 
