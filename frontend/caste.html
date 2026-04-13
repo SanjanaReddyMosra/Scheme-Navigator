@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filter 4/5 - Category</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="glass-panel">
+    <h2>Step 4: Category</h2>
+    <p>Select your category/caste</p>
+    
+    <div class="options-grid">
+      <div class="option-btn" onclick="next('General')">General</div>
+      <div class="option-btn" onclick="next('OBC')">OBC</div>
+      <div class="option-btn" onclick="next('SC/ST')">SC / ST</div>
+      <div class="option-btn" onclick="next('any')">Prefer not to say</div>
+    </div>
+    
+    <button class="btn secondary mt-20" onclick="window.history.back()">Back</button>
+  </div>
+
+  <script>
+    function next(val){
+      localStorage.setItem("caste", val);
+      
+      document.querySelector('.glass-panel').style.opacity = '0';
+      setTimeout(() => {
+        window.location.href="education.html";
+      }, 300);
+    }
+  </script>
+</body>
+</html>

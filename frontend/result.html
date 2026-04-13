@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Results - AI Scheme Recommendations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="glass-panel glass-panel-large">
+    <h1>Your Recommended Schemes</h1>
+    <p>Based on your profile, our AI scoring system has ranked these schemes to maximize your benefits.</p>
+    
+    <div id="loading" class="spinner"></div>
+
+    <div id="results" class="results-container"></div>
+    
+    <div style="margin-top: 40px;">
+      <a href="coverpage.html" class="btn secondary" style="max-width: 300px;">Go Back</a>
+    </div>
+  </div>
+
+  <script>
+    async function loadSchemes(){
+      
+      const filters = {
+        gender: localStorage.getItem("gender"),
+        age: localStorage.getItem("age"),
+        income: localStorage.getItem("income"),
+        caste: localStorage.getItem("caste"),
+        education: localStorage.getItem("education")
+      };
+
+      try {
+        const res = await fetch("http://localhost:5000/getSchemes",{
+          method:"POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify(filters)
+        });
+
+        const data = await res.json();
+        
+        document.getElementById("loading").style.display = "none";
+        
+        let output = "";
+
+        if (data && data.length > 0) {
+          data.forEach(s => {
+            const scorePercent = Math.min(100, Math.round((s.score / 6) * 100)); // Example: roughly normalize to percentage
+            output += `
+              <div class="scheme-card">
+                <span class="score-badge">🏆 Match Score: ${s.score} | ${scorePercent}% Match</span>
+                <h3>${s.scheme_name}</h3>
+                <p class="benefits">${s.benefits}</p>
+                <div style="display:flex; justify-content: space-between; align-items:center; margin-top:10px;">
+                  <span style="font-size:0.8rem; color:#94a3b8;">Eligible Age: ${s.min_age}-${s.max_age}</span>
+                  <a href="${s.link}" target="_blank" class="apply-btn">Apply Now</a>
+                </div>
+              </div>
+            `;
+          });
+        } else {
+          output = "<p>No schemes matched your exact criteria. Please try broadening your filters.</p>";
+        }
+
+        document.getElementById("results").innerHTML = output;
+      } catch (err) {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("results").innerHTML = "<p>Error connecting to backend.</p>";
+      }
+    }
+
+    loadSchemes();
+  </script>
+</body>
+</html>

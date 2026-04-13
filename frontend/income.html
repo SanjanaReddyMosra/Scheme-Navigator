@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filter 3/5 - Income</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="glass-panel">
+    <h2>Step 3: Income</h2>
+    <p>What is your approximate annual household income?</p>
+    
+    <div class="input-group">
+      <input type="number" id="incomeInput" placeholder="e.g. 150000" min="0" style="text-align: center; font-size: 1.5rem;">
+    </div>
+    
+    <div style="display: flex; gap: 15px; margin-top: 30px;">
+      <button class="btn secondary" onclick="window.history.back()">Back</button>
+      <button class="btn" onclick="next()">Continue</button>
+    </div>
+  </div>
+
+  <script>
+    function next(){
+      const val = document.getElementById('incomeInput').value;
+      if (!val) {
+        alert("Please enter your income.");
+        return;
+      }
+      localStorage.setItem("income", val);
+      
+      document.querySelector('.glass-panel').style.opacity = '0';
+      setTimeout(() => {
+        window.location.href="caste.html";
+      }, 300);
+    }
+  </script>
+</body>
+</html>

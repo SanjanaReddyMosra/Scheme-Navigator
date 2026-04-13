@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Scheme Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="glass-panel">
+    <h2>Create an Account</h2>
+    <p>Join us to start generating tailored schemes.</p>
+    
+    <div class="input-group">
+      <label>Username</label>
+      <input type="text" id="username" placeholder="Choose a username" autocomplete="off">
+    </div>
+    
+    <div class="input-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Create a password">
+    </div>
+    
+    <button class="btn mt-20" id="regBtn" onclick="register()">Register</button>
+    <p class="mt-20"><a href="login.html" style="color: #a5b4fc;">Already have an account? Login.</a></p>
+  </div>
+
+  <script>
+    async function register() {
+      const btn = document.getElementById("regBtn");
+      btn.innerText = "Creating...";
+
+      try {
+        const res = await fetch("http://localhost:5000/register", {
+          method:"POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify({
+            username: document.getElementById('username').value,
+            password: document.getElementById('password').value
+          })
+        });
+
+        const data = await res.json();
+        
+        if (data.success) {
+          alert("Registered Successfully!");
+          window.location.href="login.html";
+        } else {
+          alert("Error: " + data.message);
+          btn.innerText = "Register";
+        }
+      } catch (err) {
+        alert("Failed to connect to server.");
+        btn.innerText = "Register";
+      }
+    }
+  </script>
+</body>
+</html>

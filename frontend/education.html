@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filter 5/5 - Education</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="glass-panel">
+    <h2>Step 5: Education</h2>
+    <p>What is your highest level of education?</p>
+    
+    <div class="options-grid">
+      <div class="option-btn" onclick="next('None')">No formal education</div>
+      <div class="option-btn" onclick="next('10th')">10th Pass</div>
+      <div class="option-btn" onclick="next('12th')">12th Pass</div>
+      <div class="option-btn" onclick="next('Graduate')">Graduate and Above</div>
+    </div>
+    
+    <button class="btn secondary mt-20" onclick="window.history.back()">Back</button>
+  </div>
+
+  <script>
+    function next(val){
+      localStorage.setItem("education", val);
+      
+      document.querySelector('.glass-panel').style.opacity = '0';
+      setTimeout(() => {
+        window.location.href="result.html";
+      }, 300);
+    }
+  </script>
+</body>
+</html>
