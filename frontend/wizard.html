@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eligibility Wizard - Scheme Navigator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="wizard-box glass animate-up">
+      <div class="step-indicator" id="dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      
+      <div id="wizard-content">
+        <!-- Content will be injected dynamically -->
+      </div>
+
+      <div class="mt-20" style="display: flex; gap: 10px; justify-content: center;">
+        <button class="btn btn-secondary" id="backBtn" onclick="prevStep()" style="display: none;">Back</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="nextStep()" style="display: none;">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const steps = [
+      { id: 'gender', title: 'Start with your gender', type: 'options', key: 'gender', endpoint: 'genders' },
+      { id: 'age', title: 'How old are you?', type: 'number', key: 'age', placeholder: 'Enter age (e.g. 25)' },
+      { id: 'income', title: 'What is your annual income?', type: 'number', key: 'income', placeholder: 'Enter yearly income in ₹' },
+      { id: 'caste', title: 'Select your category', type: 'options', key: 'caste', endpoint: 'castes' },
+      { id: 'education', title: 'Your highest education', type: 'options', key: 'education', endpoint: 'education' }
+    ];
+
+    let currentStep = 0;
+    let wizardData = {};
+    let apiFilters = null;
+
+    async function init() {
+      try {
+        const res = await fetch("http://localhost:5000/filters");
+        apiFilters = await res.json();
+        renderStep();
+      } catch (e) {
+        document.getElementById('wizard-content').innerHTML = "<h2>Connection Error</h2><p>Please ensure the server is running.</p>";
+      }
+    }
+
+    function renderStep() {
+      const step = steps[currentStep];
+      const container = document.getElementById('wizard-content');
+      const dots = document.getElementById('dots').children;
+      
+      // Update dots
+      Array.from(dots).forEach((dot, idx) => {
+        dot.className = idx === currentStep ? 'dot active' : 'dot';
+      });
+
+      // Update buttons
+      document.getElementById('backBtn').style.display = currentStep === 0 ? 'none' : 'flex';
+      document.getElementById('nextBtn').style.display = step.type === 'number' ? 'flex' : 'none';
+
+      let html = `<h2 class="gradient-text">${step.title}</h2>`;
+
+      if (step.type === 'options') {
+        const options = apiFilters[step.endpoint];
+        html += `<div class="options-grid">`;
+        options.forEach(opt => {
+          html += `<div class="option-card" onclick="selectOption('${step.key}', '${opt}')">${opt}</div>`;
+        });
+        html += `</div>`;
+      } else if (step.type === 'number') {
+        html += `
+          <div class="form-group" style="max-width: 300px; margin: 20px auto;">
+            <input type="number" class="input-field" id="stepInput" placeholder="${step.placeholder}" value="${wizardData[step.key] || ''}">
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+      
+      // Focus input if it's a number field
+      if(step.type === 'number') document.getElementById('stepInput').focus();
+    }
+
+    function selectOption(key, val) {
+      wizardData[key] = val;
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        renderStep();
+      } else {
+        finish();
+      }
+    }
+
+    function nextStep() {
+      const step = steps[currentStep];
+      if (step.type === 'number') {
+        const val = document.getElementById('stepInput').value;
+        if (!val) return alert("Please enter a value");
+        wizardData[step.key] = val;
+      }
+      
+      if (currentStep < steps.length - 1) {
+        currentStep++;
+        renderStep();
+      } else {
+        finish();
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 0) {
+        currentStep--;
+        renderStep();
+      }
+    }
+
+    function finish() {
+      // Save all data to localStorage
+      for (const key in wizardData) {
+        localStorage.setItem(key, wizardData[key]);
+      }
+      window.location.href = "result.html";
+    }
+
+    init();
+  </script>
+</body>
+</html>

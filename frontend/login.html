@@ -8,22 +8,26 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="glass-panel">
-    <h2>Welcome Back</h2>
-    <p>Sign in to continue to Scheme Navigator</p>
-    
-    <div class="input-group">
-      <label>Username</label>
-      <input type="text" id="username" placeholder="Enter your username" autocomplete="off">
+  <div class="container" style="max-width: 450px; margin: auto;">
+    <div class="glass animate-up" style="padding: 40px; text-align: center;">
+      <h2 class="gradient-text" style="font-size: 2rem; margin-bottom: 10px;">Welcome Back</h2>
+      <p>Sign in to continue to Scheme Navigator</p>
+      
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="input-field" id="username" placeholder="Enter your username" autocomplete="off">
+      </div>
+      
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="input-field" id="password" placeholder="Enter your password">
+      </div>
+      
+      <button class="btn btn-primary" id="loginBtn" onclick="login()" style="width: 100%; margin-top: 10px;">Login</button>
+      <p style="margin-top: 20px; font-size: 0.9rem;">
+        <a href="register.html" style="color: #a5b4fc; text-decoration: none;">Don't have an account? Register.</a>
+      </p>
     </div>
-    
-    <div class="input-group">
-      <label>Password</label>
-      <input type="password" id="password" placeholder="Enter your password">
-    </div>
-    
-    <button class="btn mt-20" id="loginBtn" onclick="login()">Login</button>
-    <p class="mt-20"><a href="register.html" style="color: #a5b4fc;">Don't have an account? Register here.</a></p>
   </div>
 
   <script>
@@ -45,7 +49,7 @@
 
         if(data.success){
           localStorage.setItem("user", document.getElementById('username').value);
-          window.location.href="coverpage.html";
+          window.location.href="wizard.html";
         } else {
           alert("Invalid login: " + data.message);
           btn.innerText = "Login";

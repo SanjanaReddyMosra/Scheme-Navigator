@@ -8,32 +8,36 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="glass-panel">
-    <h2>Create an Account</h2>
-    <p>Join us to start generating tailored schemes.</p>
-    
-    <div class="input-group">
-      <label>Username</label>
-      <input type="text" id="username" placeholder="Choose a username" autocomplete="off">
+  <div class="container" style="max-width: 450px; margin: auto;">
+    <div class="glass animate-up" style="padding: 40px; text-align: center;">
+      <h2 class="gradient-text" style="font-size: 2rem; margin-bottom: 10px;">Create Account</h2>
+      <p>Join thousands of citizens finding their eligible schemes.</p>
+      
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="input-field" id="username" placeholder="Choose a username" autocomplete="off">
+      </div>
+      
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="input-field" id="password" placeholder="Choose a password">
+      </div>
+      
+      <button class="btn btn-primary" id="regBtn" onclick="register()" style="width: 100%; margin-top: 10px;">Register</button>
+      <p style="margin-top: 20px; font-size: 0.9rem;">
+        <a href="login.html" style="color: #a5b4fc; text-decoration: none;">Already have an account? Login.</a>
+      </p>
     </div>
-    
-    <div class="input-group">
-      <label>Password</label>
-      <input type="password" id="password" placeholder="Create a password">
-    </div>
-    
-    <button class="btn mt-20" id="regBtn" onclick="register()">Register</button>
-    <p class="mt-20"><a href="login.html" style="color: #a5b4fc;">Already have an account? Login.</a></p>
   </div>
 
   <script>
     async function register() {
       const btn = document.getElementById("regBtn");
       btn.innerText = "Creating...";
-
+      
       try {
         const res = await fetch("http://localhost:5000/register", {
-          method:"POST",
+          method: "POST",
           headers: {"Content-Type":"application/json"},
           body: JSON.stringify({
             username: document.getElementById('username').value,
@@ -42,16 +46,15 @@
         });
 
         const data = await res.json();
-        
-        if (data.success) {
-          alert("Registered Successfully!");
+        if(data.success){
+          alert("Registration Successful!");
           window.location.href="login.html";
         } else {
           alert("Error: " + data.message);
           btn.innerText = "Register";
         }
       } catch (err) {
-        alert("Failed to connect to server.");
+        alert("Server connection failed.");
         btn.innerText = "Register";
       }
     }

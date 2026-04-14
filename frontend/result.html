@@ -3,27 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Results - AI Scheme Recommendations</title>
+  <title>Your Matches - Scheme Navigator</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="glass-panel glass-panel-large">
-    <h1>👉 Recommended Schemes for You</h1>
-    <p>Based on your profile, our AI scoring system has ranked these schemes to maximize your benefits.</p>
-    
-    <div id="loading" class="spinner"></div>
+  <div class="container animate-up">
+    <div class="results-header">
+      <div>
+        <h1 class="gradient-text" style="font-size: 2.5rem;">Recommended Schemes</h1>
+        <p>Based on your profile, here are the best matches found today.</p>
+      </div>
+      <div class="search-wrapper">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search by name or benefit..." oninput="filterSchemes()">
+      </div>
+    </div>
 
-    <div id="results" class="results-container"></div>
-    
-    <div style="margin-top: 40px;">
-      <a href="coverpage.html" class="btn secondary" style="max-width: 300px;">Go Back</a>
+    <div id="schemes-grid" class="scheme-grid">
+      <!-- Cards injected here -->
+      <div class="glass" style="grid-column: 1/-1; padding: 40px; text-align: center;">
+        <p>Analyzing matching schemes...</p>
+      </div>
+    </div>
+
+    <div class="mt-20">
+      <a href="wizard.html" class="btn btn-secondary">← Retake Eligibility Check</a>
     </div>
   </div>
 
   <script>
-    async function loadSchemes(){
-      
+    let allMatches = [];
+
+    async function getSchemes() {
       const filters = {
         gender: localStorage.getItem("gender"),
         age: localStorage.getItem("age"),
@@ -33,45 +44,50 @@
       };
 
       try {
-        const res = await fetch("http://localhost:5000/getSchemes",{
-          method:"POST",
-          headers: {"Content-Type":"application/json"},
+        const res = await fetch("http://localhost:5000/getSchemes", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(filters)
         });
-
-        const data = await res.json();
         
-        document.getElementById("loading").style.display = "none";
-        
-        let output = "";
-
-        if (data && data.length > 0) {
-          data.forEach(s => {
-            const scorePercent = Math.min(100, Math.round((s.score / 6) * 100)); // Example: roughly normalize to percentage
-            output += `
-              <div class="scheme-card">
-                <span class="score-badge">🏆 Match Score: ${s.score} | ${scorePercent}% Match</span>
-                <h3>📜 ${s.scheme_name}</h3>
-                <p class="benefits">✨ ${s.benefits}</p>
-                <div style="display:flex; justify-content: space-between; align-items:center; margin-top:10px;">
-                  <span style="font-size:0.8rem; color:#94a3b8;">📅 Eligible Age: ${s.min_age}-${s.max_age}</span>
-                  <a href="${s.link}" target="_blank" class="apply-btn">🚀 Apply Now</a>
-                </div>
-              </div>
-            `;
-          });
-        } else {
-          output = "<p>No schemes matched your exact criteria. Please try broadening your filters.</p>";
-        }
-
-        document.getElementById("results").innerHTML = output;
+        allMatches = await res.json();
+        renderSchemes(allMatches);
       } catch (err) {
-        document.getElementById("loading").style.display = "none";
-        document.getElementById("results").innerHTML = "<p>Error connecting to backend.</p>";
+        document.getElementById("schemes-grid").innerHTML = `<div class="glass" style="grid-column: 1/-1;"><p>Failed to connect to the server. Please try again.</p></div>`;
       }
     }
 
-    loadSchemes();
+    function renderSchemes(schemes) {
+      const grid = document.getElementById("schemes-grid");
+      if (schemes.length === 0) {
+        grid.innerHTML = `<div class="glass" style="grid-column: 1/-1; padding: 40px;"><p>No schemes found matching your criteria. Try adjusting your filters.</p></div>`;
+        return;
+      }
+
+      grid.innerHTML = schemes.map(s => `
+        <div class="glass scheme-card animate-up">
+          <div class="tag-list">
+             <span class="tag">Match: ${s.score}/6</span>
+             <span class="tag" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">${s.gender === 'any' ? 'Universal' : s.gender}</span>
+             <span class="tag" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">Age ${s.min_age}-${s.max_age}</span>
+          </div>
+          <h3>${s.scheme_name}</h3>
+          <p>${s.benefits}</p>
+          <a href="${s.link}" target="_blank" class="btn btn-primary" style="margin-top: auto; padding: 10px;">Apply Now</a>
+        </div>
+      `).join('');
+    }
+
+    function filterSchemes() {
+      const term = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = allMatches.filter(s => 
+        s.scheme_name.toLowerCase().includes(term) || 
+        s.benefits.toLowerCase().includes(term)
+      );
+      renderSchemes(filtered);
+    }
+
+    getSchemes();
   </script>
 </body>
 </html>
