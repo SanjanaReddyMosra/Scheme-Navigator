@@ -4,10 +4,14 @@ const cors = require("cors");
 require("dotenv").config({ path: __dirname + '/.env' }); // Make sure we use the right .env path
 const cron = require("node-cron");
 const fetchSchemes = require("./fetchSchemes");
+const path = require("path");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// Serve frontend folder
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB Connected"))
