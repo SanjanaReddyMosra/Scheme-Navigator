@@ -5,6 +5,7 @@ const Scheme = require("./models/Scheme");
 const sampleSchemes = [
   {
     scheme_name: "PM Kisan Samman Nidhi",
+    department: "Ministry of Agriculture & Farmers Welfare",
     gender: "any",
     income_below: 240000,
     caste: "any",
@@ -16,6 +17,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "Ayushman Bharat (PM-JAY)",
+    department: "Ministry of Health and Family Welfare",
     gender: "any",
     income_below: 150000, 
     caste: "any",
@@ -27,6 +29,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "Sukanya Samriddhi Yojana",
+    department: "Ministry of Women and Child Development",
     gender: "Female",
     income_below: 9999999,
     caste: "any",
@@ -38,6 +41,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM Awas Yojana (Urban)",
+    department: "Ministry of Housing and Urban Affairs",
     gender: "any",
     income_below: 300000,
     caste: "any",
@@ -49,6 +53,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM Mudra Yojana",
+    department: "Ministry of Finance",
     gender: "any",
     income_below: 9999999,
     caste: "any",
@@ -60,6 +65,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM Ujjwala Yojana 2.0",
+    department: "Ministry of Petroleum and Natural Gas",
     gender: "Female",
     income_below: 180000,
     caste: "any",
@@ -71,6 +77,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "Atal Pension Yojana",
+    department: "Ministry of Finance / PFRDA",
     gender: "any",
     income_below: 9999999,
     caste: "any",
@@ -82,6 +89,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM Matru Vandana Yojana",
+    department: "Ministry of Women and Child Development",
     gender: "Female",
     income_below: 250000,
     caste: "any",
@@ -93,6 +101,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "Stand Up India",
+    department: "Ministry of Finance",
     gender: "any",
     income_below: 9999999,
     caste: "SC/ST", 
@@ -104,6 +113,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM Shram Yogi Maan-dhan",
+    department: "Ministry of Labour & Employment",
     gender: "any",
     income_below: 180000,
     caste: "any",
@@ -115,6 +125,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM Jan Dhan Yojana",
+    department: "Ministry of Finance",
     gender: "any",
     income_below: 9999999,
     caste: "any",
@@ -126,6 +137,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM Suraksha Bima Yojana",
+    department: "Ministry of Finance",
     gender: "any",
     income_below: 9999999,
     caste: "any",
@@ -137,6 +149,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "National Scholarship Portal",
+    department: "Ministry of Electronics & IT",
     gender: "any",
     income_below: 250000,
     caste: "any",
@@ -148,6 +161,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM Kaushal Vikas Yojana",
+    department: "Ministry of Skill Development & Entrepreneurship",
     gender: "any",
     income_below: 9999999,
     caste: "any",
@@ -159,6 +173,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "Beti Bachao Beti Padhao",
+    department: "Ministry of Women and Child Development",
     gender: "Female",
     income_below: 9999999,
     caste: "any",
@@ -170,6 +185,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM SVANidhi",
+    department: "Ministry of Housing and Urban Affairs",
     gender: "any",
     income_below: 200000,
     caste: "any",
@@ -181,6 +197,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "Janani Suraksha Yojana",
+    department: "Ministry of Health and Family Welfare",
     gender: "Female",
     income_below: 150000,
     caste: "any",
@@ -192,6 +209,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM Vishwakarma Yojana",
+    department: "Ministry of MSME",
     gender: "any",
     income_below: 500000,
     caste: "OBC",
@@ -203,6 +221,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "National Career Service",
+    department: "Ministry of Labour & Employment",
     gender: "any",
     income_below: 9999999,
     caste: "any",
@@ -214,6 +233,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "PM-EBus Sewa",
+    department: "Ministry of Housing and Urban Affairs",
     gender: "any",
     income_below: 9999999,
     caste: "any",
@@ -225,6 +245,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "Saubhagya Yojana",
+    department: "Ministry of Power",
     gender: "any",
     income_below: 150000,
     caste: "any",
@@ -236,6 +257,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "Ujala Scheme",
+    department: "Ministry of Power / EESL",
     gender: "any",
     income_below: 9999999,
     caste: "any",
@@ -247,6 +269,7 @@ const sampleSchemes = [
   },
   {
     scheme_name: "Digital India Internship",
+    department: "Ministry of Electronics & IT",
     gender: "any",
     income_below: 9999999,
     caste: "any",
